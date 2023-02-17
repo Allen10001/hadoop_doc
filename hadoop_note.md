@@ -4,7 +4,20 @@
 
 2. linux   /tmp 目录下的文件对所有的用户都是可见的， 同时当前用户可以创建文件，root用户也可以创建文件，在删除的时候只有当前用户和root用户可以删除，为啥。
 
-   
+
+## Hadoop 参数 mapred.map.child.java.opts
+
+>mapred.child.java.opts就是设定jvm的参数之一，在新版本中已经标准为过期，取而代之的是区分Map Task 和Reduce Task 的jvm opts , mapred.map.child.java.opts和mapred.reduce.child.java.opts(默认值为-Xmx200m)
+>
+>当用户在不设置该值情况下，会以最大1G jvm heap size启动task，有可能导致OutOfMemory，所以最简单的做法就是设大参数，并且由于这个值不是final，所以用户可以在自己的mapred-site.xml中可以覆盖默认值.
+>
+>**mapred.child.java.opts设置成多大比较合适：**
+>
+>这个参数是配置每个map或reduce使用的内存数量，默认是200m，一般情况下，该值设置为 总内存/并发数量(=核数)
+>
+>**mapred.map.child.java.opts和mapreduce.map.memeory.mb的区别：**
+>
+>mapreduce.map.memory.mb是向RM申请的内存资源大小，这些资源可用用于各种程序语言编写的程序, mapred.map.child.java.opts 一般只用于配置JVM参数.
 
 ## hadoop源码
 
